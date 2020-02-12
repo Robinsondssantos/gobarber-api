@@ -48,6 +48,15 @@ class AppointmentController {
     const { provider_id, date } = req.body;
 
     /**
+     * User and provider should not be equal
+     */
+    if (req.userId === provider_id) {
+      return res
+        .status(400)
+        .json({ error: 'User and provider should not be equal' });
+    }
+
+    /**
      * Check if provider_id is a provider
      */
     const isProvider = await User.findOne({
